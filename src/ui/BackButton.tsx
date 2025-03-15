@@ -5,7 +5,7 @@ const BackButton = () => {
   const navigate = useNavigate();
 
   // Hide button on these pages
-  const hiddenPaths = ["/dashboard", "/login", "/signup"];
+  const hiddenPaths = ["/", "/login", "/signup"];
   const isHidden = hiddenPaths.includes(location.pathname);
 
   if (isHidden) return null;

@@ -25,7 +25,7 @@ export const Add = () => {
         ← Back
       </button>
 
-      <h1 className="text-2xl font-semibold mb-4">Upload Images to Album: {albumId}</h1>
+      <p className="text-2xl font-semibold mb-4">Upload Images to Album: {albumId}</p>
 
       <ImageUpload albumId={albumId}/>
     </div>

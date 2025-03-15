@@ -26,7 +26,7 @@ const Login: React.FC = () => {
         localStorage.setItem("name_2", data.user.name_2);
   
         // Navigate only if login is successful
-        navigate("/dashboard");
+        navigate("/");
       }
     } catch (error) {
       console.error("Login failed:", error);

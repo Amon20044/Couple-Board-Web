@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Home, Image, PlusCircle, FolderOpen, User } from "lucide-react";
 

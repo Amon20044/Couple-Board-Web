@@ -1,19 +1,16 @@
 import { useState } from "react";
 import CreateAlbum from "../utils/CreateAlbum"; // Import the function
-import { useNavigate } from "react-router-dom";
 
 export default function CreateAlbumPage() {
     const [albumName, setAlbumName] = useState<string>("");
     const [coverUrl, setCoverUrl] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
     const [message, setMessage] = useState<string>("");
-    const navigate= useNavigate();
     const handleCreateAlbum = async () => {
         setLoading(true);
         setMessage("");
-
         try {
-            const response = await CreateAlbum(albumName, coverUrl);
+            await CreateAlbum(albumName, coverUrl);
             setMessage(`✅ Album Created`);
         } catch (error) {
             setMessage("❌ Failed to create album. Please try again.");

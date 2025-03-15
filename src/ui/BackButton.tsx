@@ -1,15 +1,8 @@
-import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const BackButton = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [prevURL, setPrevURL] = useState("");
-
-  // Store previous URL when route changes
-  useEffect(() => {
-    setPrevURL(window.location.href);
-  }, [location.pathname]);
 
   // Hide button on these pages
   const hiddenPaths = ["/dashboard", "/login", "/signup"];

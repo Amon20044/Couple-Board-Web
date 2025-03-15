@@ -1,11 +1,10 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams} from "react-router-dom";
 import { ImageUpload } from "../ui/ImageUpload";
 import Albums from "../ui/Albums";
 import CreateAlbumPage from "../ui/CreateUserAlbum";
 
 export const Add = () => {
   const { albumId } = useParams<{ albumId: string }>(); // Extract albumId from URL
-  const navigate = useNavigate(); // Navigation for redirects
 
   if (!albumId) {
     return (

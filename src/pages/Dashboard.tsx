@@ -2,8 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Albums from "../ui/Albums";
 import Images from "./Images";
-import Splittext from "../Anim/Splittext";
-
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
   const [name1, setName1] = useState<string | null>(null);

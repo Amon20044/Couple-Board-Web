@@ -1,0 +1,138 @@
+:root {
+  /* 🌟 Typography */
+  --font-primary: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-secondary: "Poppins", sans-serif;
+
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 20px;
+  --font-size-xl: 24px;
+  --font-size-xxl: 32px;
+
+  --line-height: 1.5;
+  --font-weight-regular: 400;
+  --font-weight-bold: 600;
+  --font-weight-extra-bold: 700;
+
+  /* 🌈 Colors */
+  --color-primary: #ff5a5f; /* Romantic Red */
+  --color-secondary: #ff9f68; /* Warm Peach */
+  --color-accent: #6b52ae; /* Deep Lavender */
+  --color-text: rgba(255, 255, 255, 0.87);
+  --color-text-muted: rgba(255, 255, 255, 0.6);
+  --color-background: #242424;
+  --color-background-light: #3a3a3a;
+  --color-border: rgba(255, 255, 255, 0.2);
+
+  /* 🖌️ UI Components */
+  --border-radius-sm: 6px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 20px;
+
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
+
+  /* 🔥 Buttons */
+  --btn-padding: 12px 24px;
+  --btn-border-radius: 8px;
+  --btn-font-size: var(--font-size-md);
+
+  /* 🎯 Transitions */
+  --transition-fast: 0.2s ease-in-out;
+  --transition-slow: 0.4s ease-in-out;
+}
+
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-primary);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography */
+h1 {
+  font-size: var(--font-size-xxl);
+  font-weight: var(--font-weight-extra-bold);
+}
+
+h2 {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+}
+
+h3 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+p {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height);
+  color: var(--color-text-muted);
+}
+
+/* 🔘 Buttons */
+.button {
+  display: inline-block;
+  padding: var(--btn-padding);
+  font-size: var(--btn-font-size);
+  border-radius: var(--btn-border-radius);
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  transition: var(--transition-fast);
+}
+
+.button-primary {
+  background: var(--color-primary);
+  color: white;
+}
+
+.button-secondary {
+  background: var(--color-secondary);
+  color: white;
+}
+
+.button:hover {
+  opacity: 0.8;
+}
+
+/* 📷 Image Grid (Pinterest-Like) */
+.grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.grid-item {
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+/* 🎭 Modal */
+.modal {
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 20px;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-lg);
+}
+
+/* 🛠 Utility Classes */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

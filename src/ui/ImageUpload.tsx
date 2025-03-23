@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { uploadImages } from "../utils/uploadImage";
 import { useNavigate } from "react-router-dom";
-import { X, UploadCloud, Key } from "lucide-react";
+import { X, UploadCloud } from "lucide-react";
 
 export const ImageUpload = ({ albumId }: { albumId: string }) => {
   const [images, setImages] = useState<{ key: string; file: File; preview: string }[]>([]);

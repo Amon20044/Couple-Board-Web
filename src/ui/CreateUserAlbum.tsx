@@ -1,17 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { FaHeart, FaImage, FaTimesCircle } from 'react-icons/fa';
 import { RiSparklingFill } from 'react-icons/ri';
 import CreateAlbum from "@/utils/CreateAlbum";
 
-interface Album {
-    id: string;
-    album_name: string;
-    cover_url: string;
-    description?: string;
-    created_at: string;
-}
 
 export default function CreateAlbumPage() {
     const navigate = useNavigate();
@@ -25,8 +17,7 @@ export default function CreateAlbumPage() {
     // Get the user ID and token from localStorage
     const userId = localStorage.getItem("userId");
     const token = localStorage.getItem("token");
-    const url = import.meta.env.VITE_BACKEND_URI;
-
+    
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0];

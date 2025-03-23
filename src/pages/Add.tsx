@@ -1,6 +1,5 @@
 import { useParams} from "react-router-dom";
 import { ImageUpload } from "../ui/ImageUpload";
-import Albums from "../ui/Albums";
 import CreateAlbumPage from "../ui/CreateUserAlbum";
 
 export const Add = () => {
@@ -8,10 +7,9 @@ export const Add = () => {
 
   if (!albumId) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen p-6">
-        <h1 className="text-2xl font-semibold mb-4">Select or Create an Album</h1>
+      <div className="flex flex-col items-center justify-center min-h-screen w-[100vw]">
         <CreateAlbumPage />
-        <Albums />
+        
       </div>
     );
   }

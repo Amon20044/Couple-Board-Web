@@ -2,34 +2,35 @@ import axios from 'axios';
 
 const urlb: string = import.meta.env.VITE_BACKEND_URI;
 
-async function CreateAlbum(name: string, url: string) {
-    const token = localStorage.getItem("token") || ""; // ✅ Get token
+async function CreateAlbum(name: string, description: string, images: File[]) {
+    const token = localStorage.getItem("token") || "";
+    if (images.length === 0) {
+        throw new Error("Please select at least one image!");
+    }
+    if (!name) name = "Our Love Album";
 
-    const urls: string[] = [
-        "https://i.postimg.cc/DyKPDYXm/98143a7a446a4184b30f2ecc5c92e5d6-H3000-W3000-320-320.jpg",
-        "https://i.postimg.cc/SxgLnStz/ab67616d0000b273f44664b37efaec6336a27938.jpg",
-        "https://i.postimg.cc/7LcgNB4H/ab67616d00001e02554015e74651071989346441.jpg"
-    ];
-
-    if (!name) name = "Love Album";
-    if (!url) url = urls[Math.floor(Math.random() * urls.length)];
+    const formData = new FormData();
+    formData.append("album_name", name);
+    formData.append("description", description);
+    formData.append("images", images[0]);
 
     try {
         const response = await axios.post(
             `${urlb}/albums/create`,
-            {
-                album_name: name,
-                cover_url: url
-            },
+            formData,
             {
                 headers: {
-                    Authorization: `Bearer ${token}` // ✅ Add Auth Token
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${token}`
                 }
             }
         );
 
-        console.log("Album created successfully");
-        return response.data;
+        // Return the response data which should contain the album ID
+        return {
+            albumId: response.data.album_id, // Adjust this based on your API response structure
+            message: "Album created successfully!"
+        };
     } catch (error) {
         console.error("Album creation failed:", error);
         throw error;

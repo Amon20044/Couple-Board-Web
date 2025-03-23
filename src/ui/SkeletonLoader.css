@@ -5,10 +5,10 @@
 }
 
 :root {
-  --background: hsl(0 0% 0% / 0%);
-  --surface: hsl(0 0% 0% / 0%);
-  --block: hsl(0 0% 0% / 12%);
-  --loader: hsl(0 0% 100% / 40%);
+  --background: hsl(297, 100%, 86%);
+  --surface: hsl(296, 100%, 89%, 0.5);
+  --block: hwb(294 89% 0% / 0.8);
+  --loader: hwb(306 53% 0% / 0.305);
   --space: 1rem;
 }
 
@@ -31,26 +31,21 @@ body {
 }
 
 .skeleton {
-  display: grid;
-  grid-template: 1fr;
-  gap: calc(var(--space) * 0.5);
-  width: clamp(200px, 50vmin, 20rem);
-  padding: var(--space);
-  border: 1px solid hsl(220 3% 15% / 10%);
-  border-radius: calc(var(--space) * 0.5);
   background-color: var(--surface);
+  border-radius: calc(var(--space) * 0.5);
+  overflow: hidden;
+  backdrop-filter: blur(8px);
 }
 
 .skeleton__block {
+  width: 100%;
   background: linear-gradient(
-        -75deg,
-        transparent 40%,
-        var(--loader),
-        transparent 60%
-      )
-      0 0 / 200% 100%,
-    var(--block);
-  border-radius: calc(var(--space) * 0.5);
+    -75deg,
+    transparent 40%,
+    var(--loader),
+    transparent 60%
+  ) 0 0 / 200% 100%, var(--block);
+  border-radius: inherit;
   animation: load 2s infinite linear;
   background-attachment: fixed;
 }
@@ -61,7 +56,46 @@ body {
   }
 }
 
-.skeleton__block:first-of-type {
-  grid-row: 2;
-  aspect-ratio: 1;
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: var(--space);
+  width: 100%;
+}
+
+/* Responsive grid adjustments */
+@media (min-width: 640px) {
+  .skeleton-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .skeleton-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .skeleton-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .skeleton-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* Adjust skeleton block for grid layout */
+.skeleton-grid .skeleton {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.skeleton-grid .skeleton__block {
+  height: 100%;
+  width: 100%;
 }

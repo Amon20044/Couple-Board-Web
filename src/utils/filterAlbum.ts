@@ -93,8 +93,10 @@ type MediaItem = {
         uploaded_at: "2025-01-14T20:54:10.268811",
       },
     ],
-  };
+  }; // example data
   
   const groupedData = groupMediaByMonthYear(jsonData.media);
   console.log(groupedData);
+
+  export { groupMediaByMonthYear };
   

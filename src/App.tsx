@@ -3,13 +3,12 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import "./App.css";
-import Navbar from "./ui/Navbar";
 import Album from "./pages/Album";
 import { Add } from "./pages/Add";
 import Images from "./pages/Images";
 import Albums from "./ui/Albums";
-import BackButton from "./ui/BackButton";
 import Profile from "./pages/Profile";
+import { Navigation } from "./ui/Nav";
 
 const App: React.FC = () => {
   const isAuthenticated = !!localStorage.getItem("token"); // Check if user is logged in
@@ -26,8 +25,8 @@ const MainContent: React.FC<{ isAuthenticated: boolean }> = ({ isAuthenticated }
   const location = useLocation(); // ✅ Use useLocation() instead of window.location
 
   return (
-    <div className="h-auto w-screen flex justify-center items-center">
-      <BackButton />
+    <div className="h-auto w-screen flex justify-center items-center overflow-x-hidden ">
+    
       <Routes>
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
@@ -43,7 +42,7 @@ const MainContent: React.FC<{ isAuthenticated: boolean }> = ({ isAuthenticated }
       </Routes>
 
       {/* ✅ Show Navbar only if user is not on login/signup */}
-      {!["/signup", "/login"].includes(location.pathname) && <Navbar />}
+      {!["/signup", "/login"].includes(location.pathname) && <Navigation/>}
     </div>
   );
 };

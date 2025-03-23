@@ -25,10 +25,10 @@ async function CreateAlbum(name: string, description: string, images: File[]) {
                 }
             }
         );
-
-        // Return the response data which should contain the album ID
+        console.log(response.data.album[0].id)
+            
         return {
-            albumId: response.data.album_id, // Adjust this based on your API response structure
+            albumId: response.data.album[0].id, // Adjust this based on your API response structure
             message: "Album created successfully!"
         };
     } catch (error) {

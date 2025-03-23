@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FaPlus, FaCalendar, FaImages } from 'react-icons/fa';
+import SkeletonLoader from "@/ui/SkeletonLoader";
 
 interface Album {
   id: string;
@@ -16,6 +17,7 @@ function Albums() {
   const [albums, setAlbums] = useState<Album[]>([]);
   const [userID, setUserID] = useState<string>("");
   const [token, setToken] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -51,6 +53,8 @@ function Albums() {
         setAlbums(response.data.albums);
       } catch (error) {
         console.error("Error fetching albums:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -64,7 +68,7 @@ function Albums() {
     <div
       onClick={() => navigate(`/dashboard/album/${album.id}`)}
       className={`group relative overflow-hidden cursor-pointer transition-all duration-500 hover:shadow-2xl ${isDashboard
-          ? "snap-start flex-none w-[25vw] aspect-square rounded-3xl"
+          ? "snap-start flex-none w-[250px] aspect-square rounded-3xl"
           : "w-full aspect-[4/3] rounded-2xl"
         }`}
     >
@@ -144,9 +148,13 @@ function Albums() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 mx-4 my-8 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           <CreateAlbumCard />
-          {albums.map((album) => (
-            <AlbumCard key={album.id} album={album} />
-          ))}
+          {loading ? (
+            <SkeletonLoader/>
+          ) : (
+            albums.map((album) => (
+              <AlbumCard key={album.id} album={album} />
+            ))
+          )}
         </div>
       </div>
     );
@@ -155,12 +163,15 @@ function Albums() {
   return (
     // Horizontal scroll layout for dashboard
     <div className="w-full overflow-x-auto pb-4">
-
       <div className="flex gap-4 snap-x snap-mandatory">
         <CreateAlbumCard />
-        {albums.map((album) => (
-          <AlbumCard key={album.id} album={album} />
-        ))}
+        {loading ? (
+          <SkeletonLoader />
+        ) : (
+          albums.map((album) => (
+            <AlbumCard key={album.id} album={album} />
+          ))
+        )}
       </div>
     </div>
   );

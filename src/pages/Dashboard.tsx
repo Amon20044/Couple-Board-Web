@@ -51,7 +51,7 @@ const Dashboard: React.FC = () => {
           {loading ? (
             <SkeletonLoader type="dashboard" />
           ) : (
-            <div className="space-y-6 md:space-y-8 px-6">
+            <div className="space-y-6 md:space-y-8 px-6 max-[768px]:px-1">
               {/* Welcome Section - Full Width */}
               <div className="w-full bg-white/90 backdrop-blur-md rounded-3xl p-6 md:p-8 shadow-xl ">
                 <div className="w-full">
@@ -116,14 +116,14 @@ const Dashboard: React.FC = () => {
               <div className="w-full">
                 {/* Albums Section */}
                 <div className="w-full mb-6">
-                  <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center justify-between mb-6 px-4">
                     <div>
-                      <h3 className="text-xl md:text-2xl font-bold text-gray-800">Your Albums</h3>
+                      <h3 className="text-xl md:text-2xl font-bold text-gray-800 mr-2">Your Albums</h3>
                       <p className="text-gray-500">Organize your precious memories</p>
                     </div>
                     <Link
                       to="/dashboard/albums"
-                      className="px-4 md:px-6 py-2.5 text-sm font-medium text-purple-600 hover:text-purple-700 border border-purple-200 rounded-xl hover:bg-purple-50 transition-colors"
+                      className="px-4 md:px-6 py-2.5 max-[768px]:py-1 max-[768px]:px-3 text-center text-sm font-medium text-purple-600 hover:text-purple-700 border border-purple-200 rounded-xl hover:bg-purple-50 transition-colors"
                     >
                       View All
                     </Link>
@@ -163,13 +163,9 @@ const Dashboard: React.FC = () => {
 
                 {/* Images Section - Full Width */}
                 <div className="w-screen rounded-3xl">
-                  <div className="flex items-center justify-between mb-6 mt-8">
-                    <h3 className="text-xl md:text-2xl font-bold text-gray-800">Recent Images</h3>
-                    <button className="text-purple-600 hover:text-purple-700 font-medium text-sm">
-                      View All
-                    </button>
+                  <div className="flex items-center justify-between mb-6 mt-8 ">
                   </div>
-                  <div className="-mx-6">
+                  <div className="-mx-6 max-[768px]:-mx-1">
                     <Images />
                   </div>
                 </div>

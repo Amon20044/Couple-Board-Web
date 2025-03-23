@@ -100,8 +100,8 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, month }) => {
   return (
     <Masonry
       breakpointCols={breakpointColumns}
-      className="flex m-7 -ml-2 w-auto"
-      columnClassName="pl-4 bg-clip-padding"
+      className="flex m-7 -ml-2 w-auto max-[768px]:m-0 max-[768px]:ml-0"
+      columnClassName="pl-2 bg-clip-padding"
     >
       {images.map((image, index) => (
         <div
@@ -117,7 +117,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, month }) => {
               loading="lazy"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <div className="absolute bottom-0 left-0 right-0 p-4">
+              <div className="absolute bottom-0 left-0 right-0 p-4 ">
                 <p className="text-white text-sm">
                   {new Date(image.uploaded_at).toLocaleDateString()}
                 </p>

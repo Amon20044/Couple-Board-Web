@@ -31,7 +31,7 @@ export default function CreateAlbumPage() {
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0];
             setAlbumImages([file]);
-            
+
             // Create preview URL
             const previewUrl = URL.createObjectURL(file);
             setImagePreview(previewUrl);
@@ -53,42 +53,17 @@ export default function CreateAlbumPage() {
         setMessage("");
 
         try {
-            CreateAlbum(albumName, description, albumImages)
-            // First create the album and get the response
-         new Promise(resolve => setTimeout(resolve, 2000));
-
-            // Fetch the latest albums
-            const albumsResponse = await axios.get<{ albums: Album[] }>(
-                `${url}/albums/${userId}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
-
-            const albums = albumsResponse.data.albums;
+            const albumID = await CreateAlbum(albumName, description, albumImages); // Await the promise to get the albumID
+    
+            // Proceed with the next steps after waiting
+            console.log("Album created successfully with ID:", albumID.albumId);
             
-            // Find the album that matches our name and was just created
-            const newAlbum = albums.find(album => album.album_name === albumName);
-
-            if (newAlbum) {
-                setMessage(`✅ Album Created Successfully!`);
-                // Navigate to the new album after a short delay
-                setTimeout(() => {
-                    navigate(`/dashboard/album/${newAlbum.id}`);
-                }, 500)
-            } else {
-                // Fallback to the most recent album if we can't find exact match
-                const latestAlbum = albums[albums.length - 1];
-                setMessage(`✅ Album Created Successfully!`);
-                setTimeout(() => {
-                    navigate(`/dashboard/album/${latestAlbum.id}`);
-                }, 1000);
-            }        } catch (error) {
-            console.error("Error:", error);
-            setMessage("❌ Failed to create album. Please try again.");
+            // Navigate to the new album page using the albumID
+            navigate(`/dashboard/album/${albumID.albumId}`); // Ensure you have the navigate function available
+    
+        } catch (error) {
+            console.error("Error creating album:", error);
+            // Handle error appropriately
         } finally {
             setLoading(false);
         }
@@ -133,7 +108,7 @@ export default function CreateAlbumPage() {
                 <div id="album-form" className="max-w-lg mx-auto bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden relative">
                     {/* Decorative top bar */}
                     <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-pink-400 to-purple-400" />
-                    
+
                     <div className="p-8">
                         <div className="text-center mb-8">
                             <FaHeart className="text-pink-500 text-3xl mx-auto mb-4" />
@@ -194,9 +169,9 @@ export default function CreateAlbumPage() {
                                             </div>
                                         ) : (
                                             <div className="relative w-full">
-                                                <img 
-                                                    src={imagePreview} 
-                                                    alt="Preview" 
+                                                <img
+                                                    src={imagePreview}
+                                                    alt="Preview"
                                                     className="w-full h-48 object-cover rounded-lg"
                                                 />
                                                 <button
@@ -239,8 +214,8 @@ export default function CreateAlbumPage() {
 
                             {message && (
                                 <div className={`mt-4 p-3 rounded-lg text-center text-sm font-medium
-                                    ${message.includes("✅") 
-                                        ? "bg-green-100 text-green-700" 
+                                    ${message.includes("✅")
+                                        ? "bg-green-100 text-green-700"
                                         : "bg-red-100 text-red-700"
                                     }`}>
                                     {message}

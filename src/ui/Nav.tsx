@@ -68,7 +68,7 @@ export const Navigation = () => {
   };
   
   // Get scale for each item based on position relative to mouse
-  const getItemSize = (index: number, totalItems: number, position: 'left' | 'right') => {
+  const getItemSize = (index: number, position: 'left' | 'right') => {
     if (!navbarHovered) {
       // Default state - active item is slightly larger
       return isActive(position === 'left' ? leftItems[index].path : rightItems[index].path) ? 44 : 40;
@@ -116,7 +116,7 @@ export const Navigation = () => {
               to={item.path} 
               icon={<item.icon />} 
               isActive={isActive(item.path)}
-              size={getItemSize(index, leftItems.length, 'left')}
+              size={getItemSize(index, 'left')}
             />
           ))}
         </div>
@@ -167,7 +167,7 @@ export const Navigation = () => {
               to={item.path} 
               icon={<item.icon />} 
               isActive={isActive(item.path)}
-              size={getItemSize(index, rightItems.length, 'right')}
+              size={getItemSize(index, 'right')}
             />
           ))}
         </div>

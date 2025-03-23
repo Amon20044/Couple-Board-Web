@@ -4,7 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import { FaImage, FaSpinner, FaHeart, FaPlus, FaTimes, FaArrowLeft, FaCalendar } from 'react-icons/fa';
 import { groupMediaByMonthYear } from "../utils/filterAlbum";
 import ImageGallery from "@/components/ImageGallery";
-
+import ImageUpload from "@/ui/ImageUpload";
 
 type Media = {
   id: string;
@@ -214,52 +214,8 @@ const Album = () => {
             </div>
 
             {/* Modal Body */}
-            <div className="p-6">
-              <div className="space-y-4">
-                {/* Drag and Drop Zone */}
-                <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-purple-400 transition-colors">
-                  <input
-                    type="file"
-                    id="file-upload"
-                    className="hidden"
-                    accept="image/*"
-                    multiple
-                  />
-                  <label
-                    htmlFor="file-upload"
-                    className="cursor-pointer flex flex-col items-center"
-                  >
-                    <FaImage className="text-4xl text-gray-400 mb-3" />
-                    <p className="text-gray-600">
-                      Drag and drop your photos here, or{" "}
-                      <span className="text-purple-500 font-medium">browse</span>
-                    </p>
-                    <p className="text-sm text-gray-400 mt-2">
-                      Supports: JPG, PNG, GIF (Max 10MB)
-                    </p>
-                  </label>
-                </div>
-
-                {/* Preview Section (if needed) */}
-                <div className="mt-4">
-                  {/* Add preview logic here */}
-                </div>
-
-                {/* Action Buttons */}
-                <div className="flex justify-end gap-3 mt-6">
-                  <button
-                    onClick={closeUploadModal}
-                    className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    className="px-6 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:shadow-lg transform hover:scale-105 transition-all duration-300"
-                  >
-                    Upload Photos
-                  </button>
-                </div>
-              </div>
+            <div className="p-6 overflow-y-auto">
+              <ImageUpload albumId ={`${album_id}`} />
             </div>
           </div>
         </div>

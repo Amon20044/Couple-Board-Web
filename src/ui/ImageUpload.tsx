@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { uploadImages } from "../utils/uploadImage";
 import { useNavigate } from "react-router-dom";
-import { X, UploadCloud } from "lucide-react";
+import { X, UploadCloud, Key } from "lucide-react";
 
 export const ImageUpload = ({ albumId }: { albumId: string }) => {
   const [images, setImages] = useState<{ key: string; file: File; preview: string }[]>([]);
@@ -19,8 +19,8 @@ export const ImageUpload = ({ albumId }: { albumId: string }) => {
   const onSelectFiles = (files: FileList | null) => {
     if (!files || files.length === 0) return;
 
-    const newImages = Array.from(files).map(file => ({
-      key: `images`,
+    const newImages = Array.from(files).map((file,i) => ({
+      key: `images-${Date.now()}-${i}`,
       file,
       preview: URL.createObjectURL(file),
     }));
@@ -48,9 +48,14 @@ export const ImageUpload = ({ albumId }: { albumId: string }) => {
   };
 
   const handleUpload = async () => {
+    const uploadFinal = images.map((image)=>({
+      Key :'images',
+      file : image.file
+    }))
+    console.log(uploadFinal)
     setUploading(true);
     try {
-      await uploadImages(albumId, images.map(img => img.file));
+      await uploadImages(albumId, uploadFinal.map(img => img.file));
       setImages([]);
       navigate(`/dashboard/album/${albumId}`);
     } catch (error) {

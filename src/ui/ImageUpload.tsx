@@ -20,7 +20,7 @@ export const ImageUpload = ({ albumId }: { albumId: string }) => {
     if (!files || files.length === 0) return;
 
     const newImages = Array.from(files).map((file,i) => ({
-      key: `images-${Date.now()}-${i}`,
+      key: `images`,
       file,
       preview: URL.createObjectURL(file),
     }));
@@ -48,14 +48,10 @@ export const ImageUpload = ({ albumId }: { albumId: string }) => {
   };
 
   const handleUpload = async () => {
-    const uploadFinal = images.map((image)=>({
-      Key :'images',
-      file : image.file
-    }))
-    console.log(uploadFinal)
+    
     setUploading(true);
     try {
-      await uploadImages(albumId, uploadFinal.map(img => img.file));
+      await uploadImages(albumId, images.map(img => img.file));
       setImages([]);
       navigate(`/dashboard/album/${albumId}`);
     } catch (error) {
@@ -86,9 +82,9 @@ export const ImageUpload = ({ albumId }: { albumId: string }) => {
         />
       </div>
 
-      <div className="grid grid-cols-3 gap-4 w-full">
+      <div className="grid grid-cols-3 gap-4 w-full overflow-y-scroll">
         {images.map(image => (
-          <div key={image.key} className="relative w-24 h-24 rounded-lg overflow-hidden group">
+          <div key={image.key} className="relative w-24 h-24 rounded-lg group">
             <img src={image.preview} alt="Preview" className="w-full h-full object-cover rounded-lg" />
             <button
               onClick={() => removeImage(image.key)}

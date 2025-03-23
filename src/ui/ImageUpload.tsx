@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { uploadImages } from "../utils/uploadImage";
 import { useNavigate } from "react-router-dom";
 import { X, UploadCloud } from "lucide-react";
+import { time } from "node:console";
 
 export const ImageUpload = ({ albumId }: { albumId: string }) => {
   const [images, setImages] = useState<{ key: string; file: File; preview: string }[]>([]);
@@ -19,8 +20,8 @@ export const ImageUpload = ({ albumId }: { albumId: string }) => {
   const onSelectFiles = (files: FileList | null) => {
     if (!files || files.length === 0) return;
 
-    const newImages = Array.from(files).map((file) => ({
-      key: `images`,
+    const newImages = Array.from(files).map((file,i) => ({
+      key: `image-${Date.now()}-${i}`,
       file,
       preview: URL.createObjectURL(file),
     }));
@@ -48,14 +49,21 @@ export const ImageUpload = ({ albumId }: { albumId: string }) => {
   };
 
   const handleUpload = async () => {
-    
     setUploading(true);
     try {
-      await uploadImages(albumId, images.map(img => img.file));
+      // Create FormData to send files
+      const formData = new FormData();
+      images.forEach(img => {
+        formData.append('images', img.file); // Append each file to FormData
+      });
+
+      // Upload images
+      await uploadImages(albumId, formData); // Ensure uploadImages is set up to handle FormData
       setImages([]);
       navigate(`/dashboard/album/${albumId}`);
-    } catch (error) {
-      console.error(error);
+    } catch (error:any) {
+      console.error("Upload failed:", error);
+      alert(error.response?.data?.message || "An error occurred during upload. Please try again.");
     } finally {
       setUploading(false);
     }

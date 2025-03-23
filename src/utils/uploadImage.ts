@@ -2,15 +2,11 @@ import axios from "axios";
 
 const backendURL = import.meta.env.VITE_BACKEND_URI; // Ensure this is set in your environment variables
 
-export const uploadImages = async (albumId: string, images: File[]) => {
-  if (images.length === 0) {
+export const uploadImages = async (albumId: string, formData: FormData) => {
+  if (!formData.has("images")) {
     alert("Please select at least one image!");
     return;
   }
-
-  const formData = new FormData();
-  images.forEach(image => formData.append("images", image));
-  formData.append("albumId", albumId);
 
   try {
     const token = localStorage.getItem("token"); // Ensure token exists in localStorage

@@ -19,7 +19,7 @@ export const ImageUpload = ({ albumId }: { albumId: string }) => {
   const onSelectFiles = (files: FileList | null) => {
     if (!files || files.length === 0) return;
 
-    const newImages = Array.from(files).map((file,i) => ({
+    const newImages = Array.from(files).map((file) => ({
       key: `images`,
       file,
       preview: URL.createObjectURL(file),

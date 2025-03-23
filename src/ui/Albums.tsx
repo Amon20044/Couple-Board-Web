@@ -138,7 +138,7 @@ function Albums() {
 
   if (isAlbumsPage) {
     return (
-      <div className="w-screen max-w-[100vw] mx-auto ">
+      <div className="w-screen max-w-[100vw] mx-auto h-screen ">
         <div className="relative h-[200px] w-screen overflow-hidden">
           <div className="absolute inset-0 bg-black/40 z-10" />
           <div className="w-full h-full bg-gradient-to-r from-purple-400 to-pink-400" />

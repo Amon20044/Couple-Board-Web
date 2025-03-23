@@ -82,7 +82,7 @@ export const ImageUpload = ({ albumId }: { albumId: string }) => {
         />
       </div>
 
-      <div className="grid grid-cols-3 gap-4 w-full overflow-y-scroll">
+      <div className="grid grid-cols-5 gap-4 w-full overflow-y-scroll">
         {images.map(image => (
           <div key={image.key} className="relative w-24 h-24 rounded-lg group">
             <img src={image.preview} alt="Preview" className="w-full h-full object-cover rounded-lg" />

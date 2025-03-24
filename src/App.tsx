@@ -3,6 +3,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import "./App.css";
+import { useState, useEffect } from "react";
 import Album from "./pages/Album";
 import { Add } from "./pages/Add";
 import Images from "./pages/Images";
@@ -11,7 +12,16 @@ import Profile from "./pages/Profile";
 import { Navigation } from "./ui/Nav";
 
 const App: React.FC = () => {
-  const isAuthenticated = !!localStorage.getItem("token"); // Check if user is logged in
+  const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("token"));
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setIsAuthenticated(!!localStorage.getItem("token"));
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
 
   return (
     <Router>
@@ -19,6 +29,7 @@ const App: React.FC = () => {
     </Router>
   );
 };
+
 
 // ✅ Extracted MainContent for cleaner structure
 const MainContent: React.FC<{ isAuthenticated: boolean }> = ({ isAuthenticated }) => {

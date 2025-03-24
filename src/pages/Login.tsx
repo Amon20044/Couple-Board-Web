@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
@@ -12,26 +12,26 @@ const Login: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const [token,setToken] = useState<string>("");
+  const [token, setToken] = useState<string>("");
 
   const handleLogin = async () => {
     if (!email || !password) {
       setError("Please enter both email and password");
       return;
     }
-    
+
     setIsLoading(true);
     setError(null);
-    
+
     try {
       const response = await axios.post(`${url}/auth/login`, {
         email,
         password,
       });
-  
+
       if (response.status === 200) {
         const { data } = response;
-  
+
         // Store token & user details securely
         localStorage.setItem("token", data.token);
         localStorage.setItem("userId", data.user.id);
@@ -40,6 +40,9 @@ const Login: React.FC = () => {
         localStorage.setItem("f_url", data.user.f_url);
         localStorage.setItem("m_url", data.user.m_url);
         setToken(data.token)
+        window.dispatchEvent(new Event("storage"));
+
+        navigate("/"); // ✅ अब यह काम करेगा!
       }
     } catch (error: any) {
       console.error("Login failed:", error);
@@ -48,13 +51,7 @@ const Login: React.FC = () => {
       setIsLoading(false);
     }
   };
-  useEffect(() => {
-    // Only navigate if token is not empty
-    if (token && !isLoading) {
-      navigate('/');
-    }
-  }, [token, navigate, isLoading]);  
-  
+
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       handleLogin();
@@ -64,7 +61,7 @@ const Login: React.FC = () => {
   return (
     <div className="w-screen h-screen flex justify-center items-center bg-gradient-to-br from-pink-50 to-purple-50">
       {/* Decorative elements */}
-      <motion.div 
+      <motion.div
         className="absolute top-10 left-10 text-pink-300 opacity-30"
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 0.3 }}
@@ -72,7 +69,7 @@ const Login: React.FC = () => {
       >
         <Heart size={48} />
       </motion.div>
-      <motion.div 
+      <motion.div
         className="absolute bottom-10 right-10 text-purple-300 opacity-30"
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 0.3 }}
@@ -80,22 +77,22 @@ const Login: React.FC = () => {
       >
         <Heart size={64} />
       </motion.div>
-      
+
       {/* Main login card */}
-      <motion.div 
+      <motion.div
         className="login-box w-full max-w-md p-8 rounded-2xl shadow-lg bg-white bg-opacity-60 backdrop-blur-lg border border-white border-opacity-20"
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6 }}
       >
-        <motion.div 
+        <motion.div
           className="text-center mb-8"
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.5 }}
         >
           <div className="flex justify-center mb-4">
-            <motion.div 
+            <motion.div
               whileHover={{ scale: 1.1, rotate: 10 }}
               className="text-pink-500"
             >
@@ -105,8 +102,8 @@ const Login: React.FC = () => {
           <h2 className="text-3xl font-bold text-gray-800 mb-2">Welcome Back</h2>
           <p className="text-gray-600">Sign in to continue your journey together</p>
         </motion.div>
-        
-        <motion.div 
+
+        <motion.div
           className="space-y-5"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -128,7 +125,7 @@ const Login: React.FC = () => {
               />
             </div>
           </div>
-          
+
           <div className="space-y-2">
             <div className="flex justify-between">
               <label className="block text-sm font-medium text-gray-700">Password</label>
@@ -150,9 +147,9 @@ const Login: React.FC = () => {
               />
             </div>
           </div>
-          
+
           {error && (
-            <motion.div 
+            <motion.div
               className="p-3 rounded-lg bg-red-50 text-red-600 text-sm"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -160,7 +157,7 @@ const Login: React.FC = () => {
               {error}
             </motion.div>
           )}
-          
+
           <motion.button
             className="w-full flex items-center justify-center space-x-2 py-3 px-4 rounded-lg bg-gradient-to-r from-pink-500 to-purple-500 text-white font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition duration-200"
             onClick={handleLogin}
@@ -170,7 +167,7 @@ const Login: React.FC = () => {
           >
             <span>Sign in</span>
             {isLoading ? (
-              <motion.div 
+              <motion.div
                 className="h-5 w-5 border-2 border-white border-t-transparent rounded-full"
                 animate={{ rotate: 360 }}
                 transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
@@ -180,8 +177,8 @@ const Login: React.FC = () => {
             )}
           </motion.button>
         </motion.div>
-        
-        <motion.div 
+
+        <motion.div
           className="mt-8 text-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

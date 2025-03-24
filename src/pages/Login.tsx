@@ -12,7 +12,6 @@ const Login: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const [token, setToken] = useState<string>("");
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -39,7 +38,6 @@ const Login: React.FC = () => {
         localStorage.setItem("name_2", data.user.name_2);
         localStorage.setItem("f_url", data.user.f_url);
         localStorage.setItem("m_url", data.user.m_url);
-        setToken(data.token)
         window.dispatchEvent(new Event("storage"));
 
         navigate("/"); // ✅ अब यह काम करेगा!

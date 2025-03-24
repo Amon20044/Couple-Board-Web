@@ -50,10 +50,10 @@ const Login: React.FC = () => {
   };
   useEffect(() => {
     // Only navigate if token is not empty
-    if (token) {
+    if (token && !isLoading) {
       navigate('/');
     }
-  }, [token]);  
+  }, [token, navigate, isLoading]);  
   
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {

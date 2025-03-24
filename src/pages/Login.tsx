@@ -53,7 +53,7 @@ const Login: React.FC = () => {
     if (token) {
       navigate('/');
     }
-  }, [token, navigate]);  
+  }, [token]);  
   
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {

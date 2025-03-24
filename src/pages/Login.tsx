@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
@@ -12,6 +12,7 @@ const Login: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const [token,setToken] = useState<string>("");
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -38,9 +39,7 @@ const Login: React.FC = () => {
         localStorage.setItem("name_2", data.user.name_2);
         localStorage.setItem("f_url", data.user.f_url);
         localStorage.setItem("m_url", data.user.m_url);
-        // Navigate only if login is successful
-        navigate("/");
-        return
+        setToken(data.token)
       }
     } catch (error: any) {
       console.error("Login failed:", error);
@@ -49,7 +48,13 @@ const Login: React.FC = () => {
       setIsLoading(false);
     }
   };
-
+  useEffect(() => {
+    // Only navigate if token is not empty
+    if (token) {
+      navigate('/');
+    }
+  }, [token, navigate]);  
+  
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       handleLogin();

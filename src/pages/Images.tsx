@@ -4,12 +4,14 @@ import { groupMediaByMonthYear } from "../utils/filterAlbum";
 import SkeletonLoader from "@/ui/SkeletonLoader";
 import ImageGallery from "@/components/ImageGallery";
 import { FaUpload } from 'react-icons/fa';
+import { useNavigate } from "react-router-dom";
 
 function Images() {
     const [imagesByMonth, setImagesByMonth] = useState<{ [key: string]: any[] }>({});
     const [loading, setLoading] = useState<boolean>(true);
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
+    const nav = useNavigate();
     const url: string = import.meta.env.VITE_BACKEND_URI;
 
     useEffect(() => {
@@ -72,18 +74,14 @@ function Images() {
                     ) : (
                         <div className="mt-8 text-center py-16 bg-white/80 backdrop-blur-sm rounded-3xl">
                             <div className="max-w-md mx-auto">
-                                <img
-                                    src="/empty-gallery.svg"
-                                    alt="No images"
-                                    className="w-48 h-48 mx-auto mb-6 opacity-60"
-                                />
                                 <h3 className="text-xl font-semibold text-gray-800 mb-2">
                                     No Images Yet
                                 </h3>
                                 <p className="text-gray-600 mb-6">
                                     Start adding photos to create beautiful memories together
                                 </p>
-                                <button className="px-6 py-3 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full hover:shadow-lg transform hover:translate-y-[-2px] transition-all duration-300 flex items-center justify-center space-x-2 mx-auto">
+                                <button className="px-6 py-3 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full hover:shadow-lg transform hover:translate-y-[-2px] transition-all duration-300 flex items-center justify-center space-x-2 mx-auto"
+                                    onClick={() => nav("/dashboard/add")}>
                                     <FaUpload className="text-lg" />
                                     <span>Upload Your First Photo</span>
                                 </button>

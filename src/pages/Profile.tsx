@@ -236,7 +236,7 @@ const Profile = () => {
                 <Calendar className="w-6 h-6 mb-2" />
                 <span className="block font-medium">Plan Date</span>
               </button>
-              <button className="p-4 rounded-2xl bg-gradient-to-r from-purple-500 to-indigo-500 text-white hover:shadow-lg transform hover:scale-[1.02] transition-all duration-300">
+              <button onClick={()=>{navigate('/dashboard/albums')}} className="p-4 rounded-2xl bg-gradient-to-r from-purple-500 to-indigo-500 text-white hover:shadow-lg transform hover:scale-[1.02] transition-all duration-300">
                 <Heart className="w-6 h-6 mb-2" />
                 <span className="block font-medium">Add Memory</span>
               </button>

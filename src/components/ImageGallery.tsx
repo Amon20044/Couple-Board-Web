@@ -126,7 +126,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, month }) => {
           </div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
-              <button 
+              <button
                 className="p-2 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors"
                 onClick={(e) => {
                   e.stopPropagation();
@@ -135,7 +135,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, month }) => {
                 <FaHeart className="text-white text-lg" />
               </button>
               <div className="flex space-x-2">
-                <button 
+                <button
                   className="p-2 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors"
                   onClick={(e) => {
                     e.stopPropagation();
@@ -144,7 +144,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, month }) => {
                 >
                   <FaDownload className="text-white text-lg" />
                 </button>
-                <button 
+                <button
                   className="p-2 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors"
                   onClick={(e) => {
                     e.stopPropagation();

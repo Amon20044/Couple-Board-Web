@@ -42,7 +42,7 @@ function Albums() {
     const fetchAlbums = async () => {
       try {
         const response = await axios.get(
-          `${url}/albums/${userID}`,
+          `${url}/api/albums/${userID}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

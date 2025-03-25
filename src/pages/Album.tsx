@@ -42,7 +42,7 @@ const Album = () => {
 
     const fetchMedia = async () => {
       try {
-        const response = await axios.get(`${url}/media/${album_id}`, {
+        const response = await axios.get(`${url}/api/media/${album_id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 

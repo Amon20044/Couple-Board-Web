@@ -16,7 +16,7 @@ async function CreateAlbum(name: string, description: string, images: File[]) {
 
     try {
         const response = await axios.post(
-            `${urlb}/albums/create`,
+            `${urlb}/api/albums/create`,
             formData,
             {
                 headers: {

@@ -22,7 +22,7 @@ function Images() {
 
         const fetchImages = async () => {
             try {
-                const response = await axios.get(`${url}/media/images/${userId}`, {
+                const response = await axios.get(`${url}/api/media/images/${userId}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
 

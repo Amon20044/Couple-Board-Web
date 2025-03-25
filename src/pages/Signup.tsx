@@ -95,7 +95,7 @@ const Signup: React.FC = () => {
         console.log(key);
       }
   
-      const response = await axios.post(`${url}/auth/register`, formData, {
+      const response = await axios.post(`${url}/api/auth/register`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

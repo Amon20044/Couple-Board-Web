@@ -21,8 +21,6 @@ function Albums() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const url: string = import.meta.env.VITE_BACKEND_URI;
-
   useEffect(() => {
     const storedToken = localStorage.getItem("token") || "";
     const storedUserID = localStorage.getItem("userId") || "";
@@ -42,7 +40,7 @@ function Albums() {
     const fetchAlbums = async () => {
       try {
         const response = await axios.get(
-          `${url}/api/albums/${userID}`,
+          `/api/albums/${userID}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

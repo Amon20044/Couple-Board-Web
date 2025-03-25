@@ -1,7 +1,5 @@
 import axios from "axios";
 
-const backendURL = import.meta.env.VITE_BACKEND_URI; // Ensure this is set in your environment variables
-
 export const uploadImages = async (albumId: string, formData: FormData) => {
   if (!formData.has("images")) {
     alert("Please select at least one image!");
@@ -10,7 +8,7 @@ export const uploadImages = async (albumId: string, formData: FormData) => {
 
   try {
     const token = localStorage.getItem("token"); // Ensure token exists in localStorage
-    const response = await axios.post(`${backendURL}/api/media/upload/${albumId}`, formData, {
+    const response = await axios.post(`/api/media/upload/${albumId}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${token}`,

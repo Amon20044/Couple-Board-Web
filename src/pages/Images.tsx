@@ -12,7 +12,6 @@ function Images() {
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
     const nav = useNavigate();
-    const url: string = import.meta.env.VITE_BACKEND_URI;
 
     useEffect(() => {
         if (!userId || !token) {
@@ -22,7 +21,7 @@ function Images() {
 
         const fetchImages = async () => {
             try {
-                const response = await axios.get(`${url}/api/media/images/${userId}`, {
+                const response = await axios.get(`/api/media/images/${userId}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
 

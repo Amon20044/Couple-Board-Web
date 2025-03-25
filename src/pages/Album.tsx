@@ -28,7 +28,6 @@ const Album = () => {
   const [token, setToken] = useState<string>("");
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
 
-  const url: string = import.meta.env.VITE_BACKEND_URI;
 
 
   useEffect(() => {
@@ -42,7 +41,7 @@ const Album = () => {
 
     const fetchMedia = async () => {
       try {
-        const response = await axios.get(`${url}/api/media/${album_id}`, {
+        const response = await axios.get(`/api/media/${album_id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -65,7 +64,7 @@ const Album = () => {
       try {
         // First get all albums
         const allAlbumsResponse = await axios.get(
-          `${url}/api/albums/${localStorage.getItem("userId")}`,
+          `/api/albums/${localStorage.getItem("userId")}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -106,7 +105,7 @@ const Album = () => {
     };
 
     fetchAlbumDetails();
-  }, [album_id, token, url]);
+  }, [album_id, token]);
 
   const openUploadModal = () => setIsUploadModalOpen(true);
   const closeUploadModal = () => setIsUploadModalOpen(false);

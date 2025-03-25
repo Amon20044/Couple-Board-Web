@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-const urlb: string = import.meta.env.VITE_BACKEND_URI;
-
 async function CreateAlbum(name: string, description: string, images: File[]) {
     const token = localStorage.getItem("token") || "";
     if (images.length === 0) {
@@ -16,7 +14,7 @@ async function CreateAlbum(name: string, description: string, images: File[]) {
 
     try {
         const response = await axios.post(
-            `${urlb}/api/albums/create`,
+            `/api/albums/create`,
             formData,
             {
                 headers: {

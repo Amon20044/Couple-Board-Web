@@ -4,8 +4,6 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import { Heart, Mail, Lock, User, Camera, ArrowRight, X } from "lucide-react";
 
-const url: string = import.meta.env.VITE_BACKEND_URI;
-
 const Signup: React.FC = () => {
   const [name1, setName1] = useState("");
   const [email1, setEmail1] = useState("");
@@ -95,7 +93,7 @@ const Signup: React.FC = () => {
         console.log(key);
       }
   
-      const response = await axios.post(`${url}/api/auth/register`, formData, {
+      const response = await axios.post(`/api/auth/register`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

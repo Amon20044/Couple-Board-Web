@@ -4,7 +4,6 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import { Heart, Mail, Lock, ArrowRight } from "lucide-react";
 
-const url: string = import.meta.env.VITE_BACKEND_URI;
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -23,7 +22,7 @@ const Login: React.FC = () => {
     setError(null);
 
     try {
-      const response = await axios.post(`${url}/api/auth/login`, {
+      const response = await axios.post(`/api/auth/login`, {
         email,
         password,
       });

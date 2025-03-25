@@ -65,7 +65,7 @@ const Album = () => {
       try {
         // First get all albums
         const allAlbumsResponse = await axios.get(
-          `${url}/albums/${localStorage.getItem("userId")}`,
+          `${url}/api/albums/${localStorage.getItem("userId")}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

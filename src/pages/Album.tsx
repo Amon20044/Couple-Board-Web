@@ -6,6 +6,7 @@ import { groupMediaByMonthYear } from "../utils/filterAlbum";
 import ImageGallery from "@/components/ImageGallery";
 import ImageUpload from "@/ui/ImageUpload";
 
+const url= import.meta.env.VITE_BACKEND_URI_DEV;
 type Media = {
   id: string;
   album_id: string;
@@ -41,7 +42,7 @@ const Album = () => {
 
     const fetchMedia = async () => {
       try {
-        const response = await axios.get(`/api/media/${album_id}`, {
+        const response = await axios.get(`${url}/api/media/${album_id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -64,7 +65,7 @@ const Album = () => {
       try {
         // First get all albums
         const allAlbumsResponse = await axios.get(
-          `/api/albums/${localStorage.getItem("userId")}`,
+          `${url}/api/albums/${localStorage.getItem("userId")}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { uploadImages } from "../utils/uploadImage";
 import { useNavigate } from "react-router-dom";
 import { X, UploadCloud } from "lucide-react";
+// import { uploadToCloudinary } from "@/utils/cloudinary";
+import imgBBuploader from "@/utils/imgBB";
 
 export const ImageUpload = ({ albumId }: { albumId: string }) => {
   const [images, setImages] = useState<{ key: string; file: File; preview: string }[]>([]);
@@ -19,7 +21,7 @@ export const ImageUpload = ({ albumId }: { albumId: string }) => {
   const onSelectFiles = (files: FileList | null) => {
     if (!files || files.length === 0) return;
 
-    const newImages = Array.from(files).map((file,i) => ({
+    const newImages = Array.from(files).map((file, i) => ({
       key: `image-${Date.now()}-${i}`,
       file,
       preview: URL.createObjectURL(file),
@@ -52,15 +54,21 @@ export const ImageUpload = ({ albumId }: { albumId: string }) => {
     try {
       // Create FormData to send files
       const formData = new FormData();
-      images.forEach(img => {
-        formData.append('images', img.file); // Append each file to FormData
-      });
+      const urls: string[] = [];
 
+      // Process all uploads
+      for (const img of images) {
+        const link: string = await imgBBuploader(img.file);
+        urls.push(link);
+      }
+      // Now add the entire array as a JSON string
+      formData.append('media_url', JSON.stringify(urls));
+      console.log("urls:", urls);
       // Upload images
-      await uploadImages(albumId, formData); // Ensure uploadImages is set up to handle FormData
+      await uploadImages(albumId, urls);
       setImages([]);
       navigate(`/dashboard/album/${albumId}`);
-    } catch (error:any) {
+    } catch (error: any) {
       console.error("Upload failed:", error);
       alert(error.response?.data?.message || "An error occurred during upload. Please try again.");
     } finally {

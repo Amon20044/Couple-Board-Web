@@ -13,6 +13,7 @@ interface Album {
   photo_count?: number;
 }
 
+const url= import.meta.env.VITE_BACKEND_URI_DEV;
 function Albums() {
   const [albums, setAlbums] = useState<Album[]>([]);
   const [userID, setUserID] = useState<string>("");
@@ -40,7 +41,7 @@ function Albums() {
     const fetchAlbums = async () => {
       try {
         const response = await axios.get(
-          `/api/albums/${userID}`,
+          `${url}/api/albums/${userID}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

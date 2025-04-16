@@ -5,6 +5,7 @@ import { RiSparklingFill } from 'react-icons/ri';
 import CreateAlbum from "@/utils/CreateAlbum";
 
 
+const url= import.meta.env.VITE_BACKEND_URI_DEV;
 export default function CreateAlbumPage() {
     const navigate = useNavigate();
     const [albumName, setAlbumName] = useState<string>("");
@@ -50,7 +51,7 @@ export default function CreateAlbumPage() {
             console.log("Album created successfully with ID:", albumID.albumId);
             
             // Navigate to the new album page using the albumID
-            navigate(`/dashboard/album/${albumID.albumId}`); // Ensure you have the navigate function available
+            navigate(`${url}/dashboard/album/${albumID.albumId}`); // Ensure you have the navigate function available
     
         } catch (error) {
             console.error("Error creating album:", error);

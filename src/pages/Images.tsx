@@ -6,6 +6,7 @@ import ImageGallery from "@/components/ImageGallery";
 import { FaUpload } from 'react-icons/fa';
 import { useNavigate } from "react-router-dom";
 
+const url= import.meta.env.VITE_BACKEND_URI_DEV;
 function Images() {
     const [imagesByMonth, setImagesByMonth] = useState<{ [key: string]: any[] }>({});
     const [loading, setLoading] = useState<boolean>(true);
@@ -21,7 +22,7 @@ function Images() {
 
         const fetchImages = async () => {
             try {
-                const response = await axios.get(`/api/media/images/${userId}`, {
+                const response = await axios.get(`${url}/api/media/images/${userId}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
 

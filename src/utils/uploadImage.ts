@@ -1,16 +1,14 @@
 import axios from "axios";
 
-export const uploadImages = async (albumId: string, formData: FormData) => {
-  if (!formData.has("images")) {
-    alert("Please select at least one image!");
-    return;
-  }
-
+const url= import.meta.env.VITE_BACKEND_URI_DEV;
+export const uploadImages = async (albumId: string, urls : string[]) => {
+  
   try {
+    console.log("Uploading images to server...", urls);
+    
     const token = localStorage.getItem("token"); // Ensure token exists in localStorage
-    const response = await axios.post(`/api/media/upload/${albumId}`, formData, {
+    const response = await axios.post(`${url}/api/media/upload/${albumId}`, urls, {
       headers: {
-        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${token}`,
       },
     });

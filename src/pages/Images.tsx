@@ -3,11 +3,15 @@ import axios from "axios";
 import { groupMediaByMonthYear } from "../utils/filterAlbum";
 import SkeletonLoader from "@/ui/SkeletonLoader";
 import ImageGallery from "@/components/ImageGallery";
-import { FaUpload } from 'react-icons/fa';
+import { FaUpload } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { setTotalImages } from "@/store/slices/imagesSlice";
+import { useAppDispatch } from "@/store/hooks";
 
-const url= import.meta.env.VITE_BACKEND_URI_DEV;
+const url = import.meta.env.VITE_BACKEND_URI_DEV;
+
 function Images() {
+    const dispatch = useAppDispatch();
     const [imagesByMonth, setImagesByMonth] = useState<{ [key: string]: any[] }>({});
     const [loading, setLoading] = useState<boolean>(true);
     const token = localStorage.getItem("token");
@@ -15,28 +19,34 @@ function Images() {
     const nav = useNavigate();
 
     useEffect(() => {
+        // Ensure userId and token are available
         if (!userId || !token) {
             console.error("Missing userId or token");
             return;
         }
 
+        // Fetch images from the API
         const fetchImages = async () => {
             try {
                 const response = await axios.get(`${url}/api/media/images/${userId}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
 
+                // Dispatch the total number of images
+                dispatch(setTotalImages(response.data.media.data.length));
+
+                // Group images by month and year
                 const groupedImages = groupMediaByMonthYear(response.data.media.data);
                 setImagesByMonth(groupedImages);
             } catch (error) {
                 console.error("Error fetching images:", error);
             } finally {
-                setLoading(false);
+                setLoading(false); // Stop loading state once the fetch is complete
             }
         };
 
         fetchImages();
-    }, [userId, token]);
+    }, [userId, token, dispatch]);
 
     return (
         <div className="min-h-screen overflow-x-hidden bg-gradient-to-br from-rose-50 to-indigo-50">
@@ -80,8 +90,10 @@ function Images() {
                                 <p className="text-gray-600 mb-6">
                                     Start adding photos to create beautiful memories together
                                 </p>
-                                <button className="px-6 py-3 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full hover:shadow-lg transform hover:translate-y-[-2px] transition-all duration-300 flex items-center justify-center space-x-2 mx-auto"
-                                    onClick={() => nav("/dashboard/add")}>
+                                <button
+                                    className="px-6 py-3 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full hover:shadow-lg transform hover:translate-y-[-2px] transition-all duration-300 flex items-center justify-center space-x-2 mx-auto"
+                                    onClick={() => nav("/dashboard/add")}
+                                >
                                     <FaUpload className="text-lg" />
                                     <span>Upload Your First Photo</span>
                                 </button>

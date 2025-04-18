@@ -10,6 +10,7 @@ import Images from "./pages/Images";
 import Albums from "./ui/Albums";
 import Profile from "./pages/Profile";
 import { Navigation } from "./ui/Nav";
+import Toast from "./ui/Toast";
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("token"));
@@ -36,8 +37,8 @@ const MainContent: React.FC<{ isAuthenticated: boolean }> = ({ isAuthenticated }
   const location = useLocation(); // ✅ Use useLocation() instead of window.location
 
   return (
-    <div className="h-auto w-screen flex justify-center items-center overflow-x-hidden ">
-    
+    <div className="h-auto w-screen flex justify-center items-center ">
+     
       <Routes>
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
@@ -51,8 +52,8 @@ const MainContent: React.FC<{ isAuthenticated: boolean }> = ({ isAuthenticated }
         <Route path="/dashboard/images" element={<Images />} />
         <Route path="/dashboard/add" element={<Add />} />
       </Routes>
-
       {/* ✅ Show Navbar only if user is not on login/signup */}
+      <Toast/>
       {!["/signup", "/login"].includes(location.pathname) && <Navigation/>}
     </div>
   );

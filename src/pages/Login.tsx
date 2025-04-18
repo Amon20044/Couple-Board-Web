@@ -38,9 +38,12 @@ const Login: React.FC = () => {
         localStorage.setItem("name_2", data.user.name_2);
         localStorage.setItem("f_url", data.user.f_url);
         localStorage.setItem("m_url", data.user.m_url);
+        localStorage.setItem("time", data.user.created_at);
+        console.log(data.user.created_At);
+        console.log(data)
         window.dispatchEvent(new Event("storage"));
 
-        navigate("/"); // ✅ अब यह काम करेगा!
+        navigate("/");
       }
     } catch (error: any) {
       console.error("Login failed:", error);

@@ -3,9 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { FaHeart, FaImage, FaTimesCircle } from 'react-icons/fa';
 import { RiSparklingFill } from 'react-icons/ri';
 import CreateAlbum from "@/utils/CreateAlbum";
+import LogoButton from "./LogoButton";
 
-
-const url= import.meta.env.VITE_BACKEND_URI_DEV;
 export default function CreateAlbumPage() {
     const navigate = useNavigate();
     const [albumName, setAlbumName] = useState<string>("");
@@ -49,9 +48,9 @@ export default function CreateAlbumPage() {
     
             // Proceed with the next steps after waiting
             console.log("Album created successfully with ID:", albumID.albumId);
-            
+            const albumId= albumID.albumId;
             // Navigate to the new album page using the albumID
-            navigate(`${url}/dashboard/album/${albumID.albumId}`); // Ensure you have the navigate function available
+            navigate(`/dashboard/album/${albumId}`); // Ensure you have the navigate function available
     
         } catch (error) {
             console.error("Error creating album:", error);
@@ -75,10 +74,7 @@ export default function CreateAlbumPage() {
             {/* Header Section */}
             <div className="w-full bg-white/80 backdrop-blur-md shadow-md sticky top-0 z-10">
                 <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-                    <h1 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
-                        <FaHeart className="text-pink-500" />
-                        Our Albums
-                    </h1>
+                    <LogoButton/>
                     <button
                         onClick={() => document.getElementById('album-form')?.scrollIntoView({ behavior: 'smooth' })}
                         className="px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-lg hover:shadow-lg transition-all transform hover:scale-[1.02] flex items-center gap-2"

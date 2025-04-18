@@ -15,9 +15,9 @@ function SkeletonLoader({ type = 'grid', items = 12 }: SkeletonLoaderProps) {
 
   if (type === 'dashboard') {
     return (
-      <div className="space-y-8">
+      <div className="space-y-8 w-screen">
         {/* Welcome Section Skeleton */}
-        <div className="skeleton h-[150px] rounded-2xl">
+        <div className="skeleton h-[150px] w-[full] rounded-2xl">
           <div className="skeleton__block h-full"></div>
         </div>
 
@@ -32,9 +32,9 @@ function SkeletonLoader({ type = 'grid', items = 12 }: SkeletonLoaderProps) {
         </div>
 
         {/* Albums Section Skeleton */}
-        <div className="skeleton-grid">
+        <div className="skeleton-grid w-screen">
           {Array.from({ length: 4 }).map((_, index) => (
-            <div key={`album-${index}`} className="skeleton rounded-2xl">
+            <div key={`album-${index}`} className="skeleton rounded-2xl w-full">
               <div className="skeleton__block h-[200px]"></div>
             </div>
           ))}

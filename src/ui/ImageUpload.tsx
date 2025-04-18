@@ -1,14 +1,18 @@
 import { useState, useEffect, useRef } from "react";
-import { uploadImages } from "../utils/uploadImage";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
+
 import { X, UploadCloud } from "lucide-react";
 // import { uploadToCloudinary } from "@/utils/cloudinary";
-import imgBBuploader from "@/utils/imgBB";
+const worker = new Worker(new URL('../worker/upload.worker.ts', import.meta.url), {
+  type: 'module'
+})
 
 export const ImageUpload = ({ albumId }: { albumId: string }) => {
   const [images, setImages] = useState<{ key: string; file: File; preview: string }[]>([]);
   const [uploading, setUploading] = useState(false);
-  const [dragging, setDragging] = useState(false);
+  const [progress, setProgress] = useState<any>(0);
+  const [dragging, setDragging] = useState<boolean>(false);
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -17,6 +21,25 @@ export const ImageUpload = ({ albumId }: { albumId: string }) => {
       images.forEach(image => URL.revokeObjectURL(image.preview));
     };
   }, [images]);
+  useEffect(() => {
+    worker.onmessage = (e) => {
+      const { type, progress, message } = e.data;
+
+      if (type === "progress") {
+        setProgress(progress);
+      } else if (type === "success") {
+        toast.success("Images uploaded successfully!");
+        setUploading(false);
+        setImages([]);
+        setProgress(0);
+        navigate(`/dashboard/album/${albumId}`);
+      } else if (type === "error") {
+        toast.error(message || "Upload failed");
+        setUploading(false);
+        setProgress(0);
+      }
+    };
+  }, [albumId, navigate]);
 
   const onSelectFiles = (files: FileList | null) => {
     if (!files || files.length === 0) return;
@@ -51,33 +74,33 @@ export const ImageUpload = ({ albumId }: { albumId: string }) => {
 
   const handleUpload = async () => {
     setUploading(true);
+    setProgress(0);
     try {
-      // Create FormData to send files
-      const formData = new FormData();
-      const urls: string[] = [];
-
-      // Process all uploads
-      for (const img of images) {
-        const link: string = await imgBBuploader(img.file);
-        urls.push(link);
-      }
-      // Now add the entire array as a JSON string
-      formData.append('media_url', JSON.stringify(urls));
-      console.log("urls:", urls);
-      // Upload images
-      await uploadImages(albumId, urls);
-      setImages([]);
-      navigate(`/dashboard/album/${albumId}`);
+      const token = localStorage.getItem("token") || "";
+      if (!token) throw new Error("No token found. Please log in again.");
+      worker.postMessage({ images, albumId, token });
     } catch (error: any) {
       console.error("Upload failed:", error);
-      alert(error.response?.data?.message || "An error occurred during upload. Please try again.");
-    } finally {
+      toast.error(error.message || "An error occurred during upload.");
       setUploading(false);
     }
   };
 
+
   return (
-    <div className="flex flex-col items-center gap-4 p-6 border rounded-lg shadow-lg bg-white w-full max-w-2xl">
+    <div className="flex flex-col items-center gap-4 p-6 border max-h-[80vh] rounded-lg shadow-lg bg-white w-full max-w-2xl">
+      {uploading && (
+        <div className="w-full mt-2">
+          <div className="bg-gray-200 rounded-full h-2 overflow-hidden">
+            <div
+              className="bg-blue-500 h-2 transition-all"
+              style={{ width: `${progress}%` }}
+            ></div>
+          </div>
+          <p className="text-sm text-gray-600 mt-1 text-center">{Math.floor(progress)}% uploaded</p>
+        </div>
+      )}
+
       <div
         className={`w-full h-40 border-2 ${dragging ? "border-blue-500 bg-blue-100" : "border-gray-300"} border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer transition-all`}
         onDragOver={handleDragOver}

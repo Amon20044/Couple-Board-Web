@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Masonry from 'react-masonry-css';
 import PhotoSwipe from 'photoswipe';
 import 'photoswipe/dist/photoswipe.css';
-import { FaDownload, FaShare, FaHeart } from 'react-icons/fa';
+import { FaDownload,  FaHeart } from 'react-icons/fa';
 
 type Media = {
   id: string;
@@ -144,14 +144,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, month }) => {
                 >
                   <FaDownload className="text-white text-lg" />
                 </button>
-                <button
-                  className="p-2 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                >
-                  <FaShare className="text-white text-lg" />
-                </button>
+                
               </div>
             </div>
           </div>

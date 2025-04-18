@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FaPlus, FaCalendar, FaImages } from 'react-icons/fa';
 import SkeletonLoader from "@/ui/SkeletonLoader";
+import { setTotalAlbums } from "@/store/slices/albumsSlice";
+import { useAppDispatch } from "@/store/hooks";
 
 interface Album {
   id: string;
@@ -13,15 +15,15 @@ interface Album {
   photo_count?: number;
 }
 
-const url= import.meta.env.VITE_BACKEND_URI_DEV;
+const url = import.meta.env.VITE_BACKEND_URI_DEV;
 function Albums() {
+  const dispatch = useAppDispatch();
   const [albums, setAlbums] = useState<Album[]>([]);
   const [userID, setUserID] = useState<string>("");
   const [token, setToken] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
   const location = useLocation();
-
   useEffect(() => {
     const storedToken = localStorage.getItem("token") || "";
     const storedUserID = localStorage.getItem("userId") || "";
@@ -49,7 +51,8 @@ function Albums() {
             },
           }
         );
-        setAlbums(response.data.albums);
+        setAlbums(response.data.albums.reverse());
+        dispatch(setTotalAlbums(response.data.albums.length));
       } catch (error) {
         console.error("Error fetching albums:", error);
       } finally {
@@ -67,8 +70,8 @@ function Albums() {
     <div
       onClick={() => navigate(`/dashboard/album/${album.id}`)}
       className={`group relative overflow-hidden cursor-pointer transition-all duration-500 hover:shadow-2xl ${isDashboard
-          ? "snap-start flex-none w-[250px] aspect-square rounded-3xl"
-          : "w-full aspect-[4/3] rounded-2xl"
+        ? "snap-start flex-none w-[250px] aspect-square rounded-3xl"
+        : "w-full aspect-[4/3] rounded-2xl"
         }`}
     >
       {/* Background Image or Gradient */}
@@ -113,10 +116,10 @@ function Albums() {
 
   const CreateAlbumCard = () => (
     <div
-      onClick={() => navigate('/create-album')}
+      onClick={() => navigate('/dashboard/add')}
       className={`group relative overflow-hidden cursor-pointer transition-all duration-500 hover:shadow-2xl bg-gradient-to-br from-pink-500 to-purple-500 ${isDashboard
-          ? "snap-start flex-none w-[280px] sm:w-[320px] aspect-square rounded-3xl"
-          : "w-full aspect-[4/3] rounded-2xl"
+        ? "snap-start flex-none w-[280px] sm:w-[320px] aspect-square rounded-3xl"
+        : "w-full aspect-[4/3] rounded-2xl"
         }`}
     >
       <div className="absolute inset-0">
@@ -148,7 +151,7 @@ function Albums() {
         <div className="grid grid-cols-1 sm:grid-cols-2 mx-4 my-8 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           <CreateAlbumCard />
           {loading ? (
-            <SkeletonLoader/>
+            <SkeletonLoader />
           ) : (
             albums.map((album) => (
               <AlbumCard key={album.id} album={album} />
@@ -167,10 +170,11 @@ function Albums() {
         {loading ? (
           <SkeletonLoader />
         ) : (
-          albums.map((album) => (
+          albums.slice(0, 5).map((album) => ( // Slice the first 5 albums
             <AlbumCard key={album.id} album={album} />
           ))
         )}
+
       </div>
     </div>
   );

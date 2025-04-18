@@ -5,12 +5,12 @@ import { motion } from "framer-motion";
 import { Heart, Mail, Lock, ArrowRight } from "lucide-react";
 
 
-const url= import.meta.env.VITE_BACKEND_URI_DEV;
+const url = import.meta.env.VITE_BACKEND_URI_DEV;
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const [errorr, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -45,9 +45,14 @@ const Login: React.FC = () => {
 
         navigate("/");
       }
-    } catch (error: any) {
+    } catch (error) {
+      let message = "Login failed. Please check your credentials.";
+      if (axios.isAxiosError(error)) {
+        message = error.response?.data?.message || message;
+      }
+    
       console.error("Login failed:", error);
-      setError(error.response?.data?.message || "Login failed. Please check your credentials.");
+      setError(message);
     } finally {
       setIsLoading(false);
     }
@@ -148,16 +153,16 @@ const Login: React.FC = () => {
               />
             </div>
           </div>
-
-          {error && (
+          {errorr && (
             <motion.div
               className="p-3 rounded-lg bg-red-50 text-red-600 text-sm"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              {error}
+              {errorr}
             </motion.div>
           )}
+
 
           <motion.button
             className="w-full flex items-center justify-center space-x-2 py-3 px-4 rounded-lg bg-gradient-to-r from-pink-500 to-purple-500 text-white font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition duration-200"

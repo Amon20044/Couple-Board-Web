@@ -57,19 +57,22 @@ const Dashboard: React.FC = () => {
   return (
     <div className="min-h-screen w-full overflow-x-hidden bg-gradient-to-br from-rose-100 via-pink-100 to-indigo-100">
       {/* Header - Full Width */}
-      <header className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md px-12">
-        <div className="w-full max-w-[2000px] mx-auto px-4 md:px-6 py-4">
-          <div className="flex items-center justify-between w-full">
-            <LogoButton />
-            <Link
-              to="/profile"
-              className="p-2.5 rounded-full bg-gray-50 hover:bg-gray-100 transition-all duration-300 hover: -md"
-            >
-              <FaUser className="text-xl text-gray-700" />
-            </Link>
-          </div>
-        </div>
-      </header>
+      <header className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md shadow-sm">
+  <div className="max-w-[2000px] mx-auto px-4 sm:px-6 lg:px-12 py-4">
+    <div className="flex items-center justify-between w-full">
+      <LogoButton />
+
+      <Link
+        to="/profile"
+        className="p-2.5 rounded-full bg-gray-100 hover:bg-gray-200 transition duration-300"
+        aria-label="User Profile"
+      >
+        <FaUser className="text-xl text-gray-700" />
+      </Link>
+    </div>
+  </div>
+</header>
+
 
       {/* Main Content */}
       <main className="w-full py-6 sm:py-8">

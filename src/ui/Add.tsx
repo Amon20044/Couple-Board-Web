@@ -29,7 +29,8 @@ const Add = () => {
             await new Promise(resolve => setTimeout(resolve, 1500)); // Simulated API call
             setMessage('✅ Album created successfully!');
         } catch (error) {
-            setMessage('❌ Failed to create album. Please try again.');
+            const errorMessage = error instanceof Error ? error.message : 'Album was not created';
+            setMessage(`❌ ${errorMessage}`);
         } finally {
             setLoading(false);
         }

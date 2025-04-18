@@ -1,7 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-hot-toast";
-
 import { X, UploadCloud } from "lucide-react";
 // import { uploadToCloudinary } from "@/utils/cloudinary";
 const worker = new Worker(new URL('../worker/upload.worker.ts', import.meta.url), {
@@ -11,7 +9,7 @@ const worker = new Worker(new URL('../worker/upload.worker.ts', import.meta.url)
 export const ImageUpload = ({ albumId }: { albumId: string }) => {
   const [images, setImages] = useState<{ key: string; file: File; preview: string }[]>([]);
   const [uploading, setUploading] = useState(false);
-  const [progress, setProgress] = useState<any>(0);
+  const [progress, setProgress] = useState<number>(0);
   const [dragging, setDragging] = useState<boolean>(false);
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -28,13 +26,14 @@ export const ImageUpload = ({ albumId }: { albumId: string }) => {
       if (type === "progress") {
         setProgress(progress);
       } else if (type === "success") {
-        toast.success("Images uploaded successfully!");
         setUploading(false);
+        
+        alert(message || "uploaded all images complete");
         setImages([]);
         setProgress(0);
         navigate(`/dashboard/album/${albumId}`);
       } else if (type === "error") {
-        toast.error(message || "Upload failed");
+        alert(message || "Upload failed");
         setUploading(false);
         setProgress(0);
       }
@@ -79,9 +78,10 @@ export const ImageUpload = ({ albumId }: { albumId: string }) => {
       const token = localStorage.getItem("token") || "";
       if (!token) throw new Error("No token found. Please log in again.");
       worker.postMessage({ images, albumId, token });
-    } catch (error: any) {
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
       console.error("Upload failed:", error);
-      toast.error(error.message || "An error occurred during upload.");
+      alert(message || "Upload failed. Please try again.");
       setUploading(false);
     }
   };
@@ -90,7 +90,8 @@ export const ImageUpload = ({ albumId }: { albumId: string }) => {
   return (
     <div className="flex flex-col items-center gap-4 p-6 border max-h-[80vh] rounded-lg shadow-lg bg-white w-full max-w-2xl">
       {uploading && (
-        <div className="w-full mt-2">
+        <div className="w-full mt-2 gap-y-2">
+          You will be notified when the upload is complete. till then you can view your memories.
           <div className="bg-gray-200 rounded-full h-2 overflow-hidden">
             <div
               className="bg-blue-500 h-2 transition-all"

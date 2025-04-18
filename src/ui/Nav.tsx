@@ -5,7 +5,7 @@ import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";   
 
 interface NavItem {
-  icon: React.FC<any>;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   path: string;
   label: string;
 }

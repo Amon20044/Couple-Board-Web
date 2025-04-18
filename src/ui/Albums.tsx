@@ -61,7 +61,7 @@ function Albums() {
     };
 
     fetchAlbums();
-  }, [userID, token]);
+  }, [userID, token , dispatch]);
 
   const isDashboard = location.pathname === "/dashboard" || location.pathname === "/";
   const isAlbumsPage = location.pathname === "/dashboard/albums";

@@ -1,4 +1,4 @@
-type MediaItem = {
+export type MediaItem = {
     id: string;
     album_id: string;
     media_url: string;
@@ -6,7 +6,7 @@ type MediaItem = {
     uploaded_at: string;
   };
   
-  type GroupedMedia = {
+  export type GroupedMedia = {
     [key: string]: MediaItem[];
   };
   

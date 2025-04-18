@@ -40,6 +40,7 @@ const Signup: React.FC = () => {
         imgBBuploader(photo1),
         imgBBuploader(photo2)
       ]);
+      console.log("Image URLs:", { url_m, url_f });
       return [url_m, url_f];
     } catch (error) {
       console.error("Parallel image upload failed:", error);
@@ -82,7 +83,7 @@ const Signup: React.FC = () => {
     return true;
   };
 
-  const handleSignup = async (e : any) => {
+  const handleSignup = async (e :React.FormEvent<HTMLFormElement>) => {
     if (!validateForm()) return;
     e.preventDefault();
     setIsLoading(true);
@@ -108,16 +109,12 @@ const Signup: React.FC = () => {
       // Upload both images and get URLs
       const [url1, url2] = await uploadBothImages(photo1, photo2);
       
-      // Add image URLs to formData
-      formData.append("furl", url1);
-      formData.append("murl", url2);
-      
+      console.log("Uploaded URLs:", { url1, url2 });
       // Log formData content for debugging
       console.log("FormData contents:");
       for (const pair of formData.entries()) {
         console.log(`${pair[0]}: ${pair[1]}`);
       }
-      console.log("FormData object:", formData);
       // Send the formData directly, not the formDataObject
       const response = await axios.post(`${url}/api/auth/register`, {
         name_1: name1,
@@ -125,8 +122,8 @@ const Signup: React.FC = () => {
         name_2: name2,
         partner2_email: email2,
         password_hash: password,
-        furl: url1,
-        murl: url2
+        f_url: url1,
+        m_url: url2
       }, {
         headers: {
           "Content-Type": "application/json",
@@ -139,7 +136,6 @@ const Signup: React.FC = () => {
       console.error("Signup failed:", error);
       if (axios.isAxiosError(error) && error.response && error.response.data) {
         setError(error.response.data.message || "Registration failed. Please try again.");
-      } else if (error instanceof Error) {
       } else {
         setError("Registration failed. Network or server error.");
       }
@@ -383,24 +379,26 @@ const Signup: React.FC = () => {
           )}
 
           {/* Submit button */}
-          <motion.button
-            className="w-full flex items-center justify-center space-x-2 py-3 px-4 rounded-lg bg-gradient-to-r from-pink-500 to-purple-500 text-white font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition duration-200"
-            onClick={(e)=>handleSignup(e)}
-            disabled={isLoading}
-            whileTap={{ scale: 0.98 }}
-            whileHover={{ scale: 1.01 }}
-          >
-            <span>Create Our Account</span>
-            {isLoading ? (
-              <motion.div
-                className="h-5 w-5 border-2 border-white border-t-transparent rounded-full"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-              />
-            ) : (
-              <ArrowRight size={18} />
-            )}
-          </motion.button>
+          <form onSubmit={(e) => handleSignup(e)}>
+            <motion.button
+              type="submit"
+              className="w-full flex items-center justify-center space-x-2 py-3 px-4 rounded-lg bg-gradient-to-r from-pink-500 to-purple-500 text-white font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition duration-200"
+              disabled={isLoading}
+              whileTap={{ scale: 0.98 }}
+              whileHover={{ scale: 1.01 }}
+            >
+              <span>Create Our Account</span>
+              {isLoading ? (
+                <motion.div
+                  className="h-5 w-5 border-2 border-white border-t-transparent rounded-full"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                />
+              ) : (
+                <ArrowRight size={18} />
+              )}
+            </motion.button>
+          </form>
 
           {/* Login link */}
           <motion.div

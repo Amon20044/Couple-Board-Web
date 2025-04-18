@@ -15,7 +15,9 @@ type Media = {
   uploaded_at: string;
 };
 
+
 type AlbumDetails = {
+  id : string
   name: string;
   description: string;
   cover_url: string;
@@ -76,11 +78,12 @@ const Album = () => {
 
         // Find the specific album from the list
         const currentAlbum = allAlbumsResponse.data.albums.find(
-          (album: any) => album.id === album_id
+          (album: AlbumDetails) => album.id === album_id
         );
 
         if (currentAlbum) {
           setAlbumDetails({
+            id: currentAlbum.id,
             name: currentAlbum.album_name,
             description: currentAlbum.description || "",
             cover_url: currentAlbum.cover_url
@@ -88,6 +91,7 @@ const Album = () => {
         } else {
           console.error("Album not found");
           setAlbumDetails({
+            id: '124512',
             name: "Album Not Found",
             description: "This album might have been deleted or you don't have access to it.",
             cover_url: ""
@@ -96,6 +100,7 @@ const Album = () => {
       } catch (error) {
         console.error("Error fetching album details:", error);
         setAlbumDetails({
+          id: '404',
           name: "Error Loading Album",
           description: "There was an error loading this album. Please try again later.",
           cover_url: ""

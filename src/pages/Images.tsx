@@ -7,12 +7,12 @@ import { FaUpload } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { setTotalImages } from "@/store/slices/imagesSlice";
 import { useAppDispatch } from "@/store/hooks";
-
+import { MediaItem } from "../utils/filterAlbum";
 const url = import.meta.env.VITE_BACKEND_URI_DEV;
 
 function Images() {
     const dispatch = useAppDispatch();
-    const [imagesByMonth, setImagesByMonth] = useState<{ [key: string]: any[] }>({});
+    const [imagesByMonth, setImagesByMonth] = useState<{ [key: string]: MediaItem[] }>({});
     const [loading, setLoading] = useState<boolean>(true);
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
@@ -36,7 +36,7 @@ function Images() {
                 dispatch(setTotalImages(response.data.media.data.length));
 
                 // Group images by month and year
-                const groupedImages = groupMediaByMonthYear(response.data.media.data);
+                const groupedImages = groupMediaByMonthYear(response.data.media.data.reverse());
                 setImagesByMonth(groupedImages);
             } catch (error) {
                 console.error("Error fetching images:", error);

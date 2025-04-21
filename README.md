@@ -1,3 +1,14 @@
+# CoupleBoard Frontend
+
+A microservices-based backend for the CoupleBoard application, using NGINX for reverse proxy routing. This architecture ensures scalability, modularity, and ease of deployment across services.
+
+## 🔍 Project Links
+
+- **Frontend Live**: [https://couple-board-web.vercel.app](https://couple-board-web.vercel.app)
+- **Backend GitHub**: [CoupleBoard Microservices](https://github.com/Amon20044/CoupleBoard-microservices)
+
+## 🚀 Features
+
 # CoupleBoard Microservices
 
 A microservices-based backend for the CoupleBoard application, using NGINX for reverse proxy routing. This architecture ensures scalability, modularity, and ease of deployment across services.
@@ -9,24 +20,13 @@ A microservices-based backend for the CoupleBoard application, using NGINX for r
 
 ## 🚀 Features
 
-- **Modular Microservices**: Separate services for auth, albums, media, etc.
-- **Reverse Proxy**: Centralized routing via NGINX.
-- **Docker-first**: Fully containerized using Docker Compose.
-- **Scalable Architecture**: Easy to add new services.
-
-## 📂 Folder Structure
-
-```bash
-CoupleBoard-microservices/
-├── src/                    # Microservices directory
-│   ├── albums-service/
-│   ├── auth-service/
-│   ├── media-service/
-│   ├── nginx-service/  # NGINX reverse proxy config
-│   └──       └── nginx.conf             
-├── docker-compose.yaml    # Compose setup for all services
-└── README.md
-```
+- **Multithreading with Worker Threads**: Asynchronously upload images in background for seamless UX
+- **Image Upload Integration**: Uses ImgBB and file buffer storage server
+- **Redux**: State management for scalable frontend
+- **Axios**: Efficient API communication
+- **Vite**: Ultra-fast frontend tooling
+- **Masonry Layout**: Grid-based responsive album/gallery display
+- **GSAP & Framer Motion**: Smooth and interactive animations
 
 ## 🚪 Prerequisites
 

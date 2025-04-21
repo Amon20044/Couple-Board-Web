@@ -1,6 +1,6 @@
 # CoupleBoard Frontend
 
-A microservices-based backend for the CoupleBoard application, using NGINX for reverse proxy routing. This architecture ensures scalability, modularity, and ease of deployment across services.
+A microservices-based Product for the Couples to store their sweet memories with unlimited storage, using NGINX for reverse proxy routing. This architecture ensures scalability, modularity, and ease of deployment across services.
 
 ## 🔍 Project Links
 
